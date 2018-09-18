@@ -1,0 +1,42 @@
+---
+- name: Configure Apache HTTPD server
+  lineinfile:
+    path: /etc/httpd/conf/httpd.conf
+    regexp: '^#ServerName www.example.com:80'
+    line: 'ServerName shellshock.local:80'
+    state: present
+    backrefs: true
+  register: httpd_update
+
+- name: Create directories
+  file:
+    path: /var/www/{{ item.path }}
+    state: directory
+    owner: apache
+    group: apache
+    mode: "{{ item.mode }}"
+  with_filetree: www/
+  when: item.state == 'directory'
+
+- name: Transfer files
+  copy:
+    src: "{{ item.src }}"
+    dest: /var/www/{{ item.path }}
+    mode: '{{ item.mode }}'
+    owner: apache
+    group: apache
+  with_filetree: www/
+  when: item.state == 'file'
+
+- name: Restart Apache HTTPD server
+  systemd:
+    name: httpd
+    state: restarted
+    enabled: true
+  when: httpd_update is changed
+
+- name: Ensure Apache HTTPD server is up
+  systemd:
+    name: httpd
+    state: started
+    enabled: true

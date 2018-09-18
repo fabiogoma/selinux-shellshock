@@ -1,0 +1,14 @@
+---
+- name: Provisioning shellshock demo host
+  hosts: all
+  become: true
+  gather_facts: true
+  
+  tasks:
+    - name: Include common role
+      include_role:
+        name: fabiogoma.common  
+
+    - name: Include app role
+      include_role:
+        name: fabiogoma.shellshock

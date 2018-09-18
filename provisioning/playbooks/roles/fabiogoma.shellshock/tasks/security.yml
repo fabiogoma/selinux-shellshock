@@ -1,0 +1,17 @@
+---
+- name: Ensure firewalld is up
+  systemd:
+    name: firewalld
+    state: started
+    enabled: true
+
+- name: Enable http access
+  firewalld:
+    service: http
+    permanent: true
+    state: enabled
+  register: http_firewall_update
+
+- name: Reload firewall rules
+  command: /usr/bin/firewall-cmd --reload
+  when: http_firewall_update is changed

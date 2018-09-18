@@ -1,0 +1,19 @@
+---
+- name: Downgrade shell version
+  yum:
+    name: http://vault.centos.org/7.0.1406/os/x86_64/Packages/bash-4.2.45-5.el7.x86_64.rpm
+    state: present
+    allow_downgrade: true
+
+- name: Install Apache HTTPD server
+  yum:
+    name: httpd
+    state: present
+
+- name: Transfer Redhat shell script for testing
+  copy:
+    src: test/shellshock-test.sh
+    dest: /home/vagrant/shellshock-test.sh
+    owner: vagrant
+    group: vagrant
+    mode: 0750

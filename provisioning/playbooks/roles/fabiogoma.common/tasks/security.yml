@@ -1,0 +1,16 @@
+---
+- name: Set SELinux to permissive (demo purpose only)
+  selinux:
+    policy: targeted
+    state: permissive
+
+- name: Enable mdns access
+  firewalld:
+    service: mdns
+    permanent: true
+    state: enabled
+
+- name: Reload firewalld
+  systemd:
+    state: started
+    name: firewalld
