@@ -221,3 +221,10 @@ Let's do the hack again and check the result on image below:
 </p>
 
 > NOTICE: You'll see now that you are no longer able to run a remote shell, this is due the fact of SELinux now is set to enforce security and your system will be protected.
+
+
+Conclusion
+----------------------
+
+As you may have noticed, by enabling SELinux sysadmins can protect their systems from many security issues. 
+Despite its advantages, most people disable SELinux as soon as they got the system up and running. If you want to learn more about the benefits and how to enable this tool, check [my other demo here](https://github.com/fabiogoma/selinux-nginx-tomcat).
